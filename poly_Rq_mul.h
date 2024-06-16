@@ -5,11 +5,16 @@
 #include <stdint.h>
 #include <arm_neon.h>
 
-#include "param.h"
+#include "params.h"
 
 // the size of each block matrix
 #define SIZE 8
 
-void poly_Rq_mul (uint16_t *r, uint16_t *a, uint16_t *b);
+#define POLY_N 1024
+typedef struct {
+    uint16_t coeffs[POLY_N];
+} poly;
+
+void poly_Rq_mul (poly *r, poly *a, poly *b);
 
 #endif
