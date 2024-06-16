@@ -91,9 +91,9 @@ void Toep_3x3x3x2x2x8(uint16x8_t *toep, uint16x8_t *vec, uint16x8_t *r){
         toep_m1[i] = toep[i + 108];
         toep_m2[i] = toep[i + 144];
 
-        toep_0_m1_m2 = vaddq_u16(toep_0 , vaddq_u16(toep_m1, toep_m2));
-        toep_p1_0_m1 = vaddq_u16(toep_p1, vaddq_u16(toep_0 , toep_m1));
-        toep_p2_p1_0 = vaddq_u16(toep_p2, vaddq_u16(toep_p1, toep_0 ));
+        toep_0_m1_m2[i] = vaddq_u16(toep_0 [i], vaddq_u16(toep_m1[i], toep_m2[i]));
+        toep_p1_0_m1[i] = vaddq_u16(toep_p1[i], vaddq_u16(toep_0 [i], toep_m1[i]));
+        toep_p2_p1_0[i] = vaddq_u16(toep_p2[i], vaddq_u16(toep_p1[i], toep_0 [i]));
     }
 
     for (uint16_t i=0; i<36; i++) {
@@ -160,9 +160,9 @@ void Toep_3x3x2x2x8(uint16x8_t *toep, uint16x8_t *vec, uint16x8_t *r){
         toep_m1[i] = toep[i + 36];
         toep_m2[i] = toep[i + 48];
 
-        toep_0_m1_m2 = vaddq_u16(toep_0 , vaddq_u16(toep_m1, toep_m2));
-        toep_p1_0_m1 = vaddq_u16(toep_p1, vaddq_u16(toep_0 , toep_m1));
-        toep_p2_p1_0 = vaddq_u16(toep_p2, vaddq_u16(toep_p1, toep_0 ));
+        toep_0_m1_m2[i] = vaddq_u16(toep_0 [i], vaddq_u16(toep_m1[i], toep_m2[i]));
+        toep_p1_0_m1[i] = vaddq_u16(toep_p1[i], vaddq_u16(toep_0 [i], toep_m1[i]));
+        toep_p2_p1_0[i] = vaddq_u16(toep_p2[i], vaddq_u16(toep_p1[i], toep_0 [i]));
     }
 
     for (uint16_t i=0; i<12; i++) {
@@ -229,9 +229,9 @@ void Toep_3x2x2x8(uint16x8_t *toep, uint16x8_t *vec, uint16x8_t *r){
         toep_m1[i] = toep[i + 12];
         toep_m2[i] = toep[i + 16];
 
-        toep_0_m1_m2 = vaddq_u16(toep_0 , vaddq_u16(toep_m1, toep_m2));
-        toep_p1_0_m1 = vaddq_u16(toep_p1, vaddq_u16(toep_0 , toep_m1));
-        toep_p2_p1_0 = vaddq_u16(toep_p2, vaddq_u16(toep_p1, toep_0 ));
+        toep_0_m1_m2[i] = vaddq_u16(toep_0 [i], vaddq_u16(toep_m1[i], toep_m2[i]));
+        toep_p1_0_m1[i] = vaddq_u16(toep_p1[i], vaddq_u16(toep_0 [i], toep_m1[i]));
+        toep_p2_p1_0[i] = vaddq_u16(toep_p2[i], vaddq_u16(toep_p1[i], toep_0 [i]));
     }
 
     for (uint16_t i=0; i<4; i++) {
@@ -276,9 +276,9 @@ void Toep_2x2x8(uint16x8_t *toep, uint16x8_t *vec, uint16x8_t *r){
     uint16x8_t vec_1[ 2 ];
     uint16x8_t vec_1_minus_0[ 2 ];
 
-    uint16x8_t intermdiate_0[ 2 ];
-    uint16x8_t intermdiate_1[ 2 ];
-    uint16x8_t intermdiate_2[ 2 ];
+    uint16x8_t intermediate_0[ 2 ];
+    uint16x8_t intermediate_1[ 2 ];
+    uint16x8_t intermediate_2[ 2 ];
 
     for (uint16_t i=0; i<4; i++){
         // i = 0, 1, ... 4*SIZE-1 = 31
@@ -302,9 +302,9 @@ void Toep_2x2x8(uint16x8_t *toep, uint16x8_t *vec, uint16x8_t *r){
 
 
 
-    Toep_2x8(toep_0_m1, vec_1,         intermdiate_0);
-    Toep_2x8(toep_0,    vec_1_minus_0, intermdiate_1);
-    Toep_2x8(toep_p1_0, vec_0,         intermdiate_2);
+    Toep_2x8(toep_0_m1, vec_1,         intermediate_0);
+    Toep_2x8(toep_0,    vec_1_minus_0, intermediate_1);
+    Toep_2x8(toep_p1_0, vec_0,         intermediate_2);
 
 
     // Recombination
@@ -355,9 +355,9 @@ void Toep_2x8(uint16x8_t *toep, uint16x8_t *vec, uint16x8_t *r){
     vec_1_minus_0 = vsubq_u16(vec_1, vec_0);
 
 
-    TMVP_8x8_on_8(toep_0_m1, vec_1,          intermdiate_0);
-    TMVP_8x8_on_8(toep_0,    vec_1_minus_0,  intermdiate_1);
-    TMVP_8x8_on_8(toep_p1_0, vec_0,          intermdiate_2);
+    TMVP_8x8_on_8(toep_0_m1, &vec_1,          &intermdiate_0);
+    TMVP_8x8_on_8(toep_0,    &vec_1_minus_0,  &intermdiate_1);
+    TMVP_8x8_on_8(toep_p1_0, &vec_0,          &intermdiate_2);
 
     // Recombination
     r[0] = vsubq_u16(intermediate_0, intermediate_1);
@@ -365,36 +365,36 @@ void Toep_2x8(uint16x8_t *toep, uint16x8_t *vec, uint16x8_t *r){
 }
 
 void TMVP_8x8_on_8(uint16x8_t *toep, uint16x8_t *vec, uint16x8_t *r){
-    r = vdupq_n_u16(0);
+    *r = vdupq_n_u16(0);
     uint16_t scalar;
     uint16x8_t toep_vector[2] = {toep[0], toep[1]};
 
-    scalar = vec[0];
+    scalar = *vec[0];
     //toep[0] = vextq_u16(toep[0], toep[1], 1);
-    r = vmlaq_n_u16(r, toep_vector, scalar);
-    scalar = vec[1];
+    *r = vmlaq_n_u16(*r, toep_vector[0], scalar);
+    scalar = *vec[1];
     toep[0] = vextq_u16(toep[0], toep[1], 1);
-    r = vmlaq_n_u16(r, toep_vector, scalar);
-    scalar = vec[2];
+    *r = vmlaq_n_u16(*r, toep_vector[0], scalar);
+    scalar = *vec[2];
     toep[0] = vextq_u16(toep[0], toep[1], 1);
-    r = vmlaq_n_u16(r, toep_vector, scalar);
-    scalar = vec[3];
+    *r = vmlaq_n_u16(*r, toep_vector[0], scalar);
+    scalar = *vec[3];
     toep[0] = vextq_u16(toep[0], toep[1], 1);
-    r = vmlaq_n_u16(r, toep_vector, scalar);
-    scalar = vec[4];
+    *r = vmlaq_n_u16(*r, toep_vector[0], scalar);
+    scalar = *vec[4];
     toep[0] = vextq_u16(toep[0], toep[1], 1);
-    r = vmlaq_n_u16(r, toep_vector, scalar);
-    scalar = vec[5];
+    *r = vmlaq_n_u16(*r, toep_vector[0], scalar);
+    scalar = *vec[5];
     toep[0] = vextq_u16(toep[0], toep[1], 1);
-    r = vmlaq_n_u16(r, toep_vector, scalar);
-    scalar = vec[6];
+    *r = vmlaq_n_u16(*r, toep_vector[0], scalar);
+    scalar = *vec[6];
     toep[0] = vextq_u16(toep[0], toep[1], 1);
-    r = vmlaq_n_u16(r, toep_vector, scalar);
-    scalar = vec[7];
+    *r = vmlaq_n_u16(*r, toep_vector[0], scalar);
+    scalar = *vec[7];
     toep[0] = vextq_u16(toep[0], toep[1], 1);
-    r = vmlaq_n_u16(r, toep_vector, scalar);
+    *r = vmlaq_n_u16(*r, toep_vector[0], scalar);
 
     // Reverse to get the correct result
-    r = vrev64q_u16(r)
+    r = vrev64q_u16(r);
     r = vextq_u16(r, r, 4);
 }
