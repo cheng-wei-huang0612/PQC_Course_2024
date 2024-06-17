@@ -1,0 +1,1 @@
+cmd_/home/nullreaper/Documents/PQC/neon_assignment/enable_ccr/Module.symvers :=  sed 's/ko$$/o/'  /home/nullreaper/Documents/PQC/neon_assignment/enable_ccr/modules.order | scripts/mod/modpost -m -a    -o /home/nullreaper/Documents/PQC/neon_assignment/enable_ccr/Module.symvers -e -i Module.symvers -T - 
